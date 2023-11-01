@@ -1,10 +1,15 @@
 const express = require('express');
-const { createPost, likeAndUnlikePost, deletePost, getPostsOfFollowing } = require('../controllers/post');
+const { createPost, likeAndUnlikePost, deletePost, getPostsOfFollowing, addComments, deleteComments } = require('../controllers/post');
 const { isAuthenticated } = require('../middlewares/auth');
 
 const router = express.Router();
 
 router.route('/post/upload').post( isAuthenticated, createPost)
+
+router
+    .route('/post/comment/:id')
+    .put( isAuthenticated, addComments)
+    .delete(isAuthenticated, deleteComments)
 
 router.route('/posts').get(isAuthenticated, getPostsOfFollowing)
 
