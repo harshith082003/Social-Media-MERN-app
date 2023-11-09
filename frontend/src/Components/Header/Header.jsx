@@ -21,19 +21,19 @@ export default function Header() {
     <div className='header'>
 
         <Link to={'/'} onClick={() => setTab('/')}>           
-        { tab === '/' ? <Home style={{ color: 'black'}}/> : <HomeOutlined/> }           
+        { tab === '/' ? <Home style={{ color: 'orange'}}/> : <HomeOutlined/> }           
         </Link>
 
         <Link to={'/newPost'} onClick={() => setTab('/newPost')}>
-            { tab === '/newPost' ? <Add style={{ color: 'black'}}/> : <AddOutlined/> } 
+            { tab === '/newPost' ? <Add style={{ color: 'orange'}}/> : <AddOutlined/> } 
         </Link>
 
         <Link to={'/search'} onClick={() => setTab('/search')}>
-            { tab === '/search' ? <Search style={{ color: 'black'}}/> : <SearchOutlined/> } 
+            { tab === '/search' ? <Search style={{ color: 'orange'}}/> : <SearchOutlined/> } 
         </Link>
 
         <Link to={'/account'} onClick={() => setTab('/account')}>
-            { tab === '/account' ? <AccountCircle style={{ color: 'black'}}/> : <AccountCircleOutlined/> } 
+            { tab === '/account' ? <AccountCircle style={{ color: 'orange'}}/> : <AccountCircleOutlined/> } 
         </Link>
       
     </div>
