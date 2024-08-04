@@ -10,10 +10,13 @@ export const loginUser = (email, password) => async (dispatch) => {
         })
 
         const { data } = await axios.post(`${server}/login`, 
-            { email, password }, 
+            { 
+                email, 
+                password 
+            }, 
             {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json"
                 },
                 withCredentials: true,  // idu haakilla andre browser alli cookie torsalla
             },
@@ -28,7 +31,30 @@ export const loginUser = (email, password) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "LoginFailure",
-            payload: error
+            payload:  error.response.data.message
+        })
+    }
+}
+
+export const loadUser = () => async (dispatch) => {
+
+    try {
+
+        dispatch({
+            type: "LoadUserRequest"
+        })
+
+        const { data } = await axios.get(`${server}/myProfile`);
+
+        dispatch({
+            type: "LoadUserSuccess",
+            payload: data.user
+        })
+        
+    } catch (error) {
+        dispatch({
+            type: "LoadUserFailure",
+            payload:  error.response.data.message
         })
     }
 }

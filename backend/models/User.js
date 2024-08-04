@@ -83,6 +83,7 @@ userSchema.methods.matchPassword = async function (password) {
 }
 
 userSchema.methods.generateToken = async function () {
+    console.log('Token created');
     return jwt.sign({_id: this._id}, process.env.JWT_SECRET)
 }
 

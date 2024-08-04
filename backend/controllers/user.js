@@ -30,7 +30,6 @@ const registerUser = async (req, res) => {
         const cookieOptions = {
             maxAge: new Date(Date.now() + 30*24*60*60*1000), 
             httpOnly: true,
-            sameSite: false,
         }
 
         res.status(201).cookie('token', token, cookieOptions).json({
