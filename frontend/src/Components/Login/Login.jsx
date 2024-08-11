@@ -3,7 +3,9 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Login.css'
 import { useDispatch } from 'react-redux'
-import { loginUser } from '../../Actions/User'
+import axios from 'axios'
+import { server } from '../../main'
+// import { loginUser } from '../../Actions/User'
 
 export default function Login() {
 
@@ -12,12 +14,29 @@ export default function Login() {
 
     const dispatch = useDispatch()
     
-    const loginHandler = (e) => {
+    const loginHandler = async (e) => {
         
         e.preventDefault();
         // console.log(email, password);
 
-        dispatch(loginUser(email, password))
+        // dispatch(loginUser(email, password))
+        try {
+            const { data } = await axios.post(`${server}/login`, 
+                { 
+                    email, 
+                    password 
+                }, 
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    withCredentials: true,  // idu haakilla andre browser alli cookie torsalla
+                },
+                
+            );            
+        } catch (error) {
+            console.log(error);
+        }
         
     }
 

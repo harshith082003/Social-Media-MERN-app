@@ -22,7 +22,7 @@ export const loginUser = (email, password) => async (dispatch) => {
             },
             
         );
-
+        console.log('Login success');
         dispatch({
             type: "LoginSuccess",
             payload: data.user
