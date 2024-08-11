@@ -1,6 +1,5 @@
 const User = require('../models/User');
 const Post = require('../models/Post');
-const sendPasswordEmail = require('../middlewares/sendEmail')
 
 const registerUser = async (req, res) => {
     try {
@@ -111,74 +110,6 @@ const logoutUser = async (req, res) => {
             message: error.message
         })
     }
-}
-
-const forgotPassword = async (req, res) => {
-    
-    try {
-        const user = await User.findOne({email: req.body.email});
-        
-        if(!user){
-            return res.status(404).json({
-                success: false,
-                message: 'User not found'
-            });
-        }
-
-        console.log('before getting token');
-
-        const resetPasswordToken = user.getResetPasswordToken();
-        await user.save();
-
-        console.log('after getting token');
-
-
-        const resetUrl = `${req.protocol}://${req.get(
-            'host'
-        )}/api/v1/password/reset/${resetPasswordToken}`;
-
-        const message = `Reset your password by clicking on the link below: \n\n${resetUrl}`;
-
-        try {
-            console.log('before sending email');
-
-            await sendPasswordEmail({
-                email: user.email,
-                subject: 'Reset Password',
-                message,
-            })
-
-            console.log('after sending email');
-
-
-            return res.status(200).json({
-                success: true,
-                message: `Email sent to ${user.email}`
-            });
-            
-        } catch (error) {
-
-            user.resetPasswordExpire = undefined;
-            user.resetPasswordToken = undefined;
-            await user.save();
-
-
-            res.status(500).json({
-                success: false,
-                message: error.message
-            })           
-        }
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        })
-    }
-}
-
-const resetPassword = async (req, res) => {
-    
 }
 
 const followUser = async (req, res) => {
@@ -417,4 +348,4 @@ const deleteUserProfile = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, loginUser, followUser, logoutUser, updatePassword, updateUserProfile, deleteUserProfile, getMyProfile, getUserProfile, getAllUsers, forgotPassword }
+module.exports = { registerUser, loginUser, followUser, logoutUser, updatePassword, updateUserProfile, deleteUserProfile, getMyProfile, getUserProfile, getAllUsers }
